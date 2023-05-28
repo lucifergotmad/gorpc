@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package user;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "gorpc/api/user";
+
+service UserService {
+  rpc CreateUser (CreateUserRequest) returns (UserResponse) {}
+  rpc GetUser (GetUserRequest) returns (User) {}
+  rpc GetUserBatch (GetUserBatchRequest) returns (UserBatchResponse) {}
+  rpc UpdateUser (UpdateUserRequest) returns (UserResponse) {}
+  rpc UpdateUserPassword(UpdateUserPasswordRequest) returns (UserResponse) {}
+  rpc DeleteUser (DeleteUserRequest) returns (UserResponse) {}
+}
+
+message User {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string username = 4;
+  string password = 5;
+  google.protobuf.Timestamp date_created = 6;
+  google.protobuf.Timestamp date_updated = 7;
+}
+
+message CreateUserRequest {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string username = 4;
+  string password = 5;
+}
+
+message UpdateUserRequest {
+  string id = 1;
+  string name = 2;
+}
+
+message UpdateUserPasswordRequest {
+  string id = 1;
+  string old_password = 2;
+  string new_password = 3;
+  string confirmed_password = 4;
+}
+
+message GetUserRequest {
+  string id = 1;
+}
+
+message GetUserBatchRequest {
+  uint32 page = 1;
+  uint32 size = 2;
+}
+
+message DeleteUserRequest {
+  string id = 1;
+}
+
+message UserResponse {
+  string message = 1;
+}
+
+message UserBatchResponse {
+  repeated User users = 1;
+}
