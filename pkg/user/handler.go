@@ -20,30 +20,29 @@ func NewHandler(serv UserService) *UserHandler {
 func (h *UserHandler) CreateUser(ctx context.Context, req *pb.CreateUserRequest) (*pb.UserResponse, error) {
 	// Call the service to perform the business logic and database operation.
 	err := h.serv.CreateUser(&User{
-		Name:  req.GetName(),
-		Email: req.GetEmail(),
+		name:  req.GetName(),
+		email: req.GetEmail(),
+		password: req.GetPassword(),
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	return &pb.CreateUserResponse{
+	return &pb.UserResponse{
 		Message: "User created successfully",
 	}, nil
 }
 
-func (h *UserHandler) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.GetUserResponse, error) {
+func (h *UserHandler) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.User, error) {
 	// Call the service to perform the business logic and database operation.
-	user, err := h.serv.GetUser(req.GetUserId())
+	user, err := h.serv.GetUser(req.GetId())
 	if err != nil {
 		return nil, err
 	}
 
-	return &pb.GetUserResponse{
-		User: &pb.User{
-			Id:    user.ID,
-			Name:  user.Name,
-			Email: user.Email,
-		},
-	}, nil
+	return  &pb.User{
+			Id:    user.id,
+			Name:  user.name,
+			Email: user.email,
+		}, nil
 }
