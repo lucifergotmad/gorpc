@@ -20,7 +20,6 @@ func NewHandler(serv IUserService) *UserHandler {
 	}
 }
 
-
 func (h *UserHandler) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.User, error) {
 	user, err := h.serv.GetUser(req.Id)
 	if err != nil {

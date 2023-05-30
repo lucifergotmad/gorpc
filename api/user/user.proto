@@ -28,7 +28,6 @@ message User {
 }
 
 message CreateUserRequest {
-  uint64 id = 1;
   string name = 2;
   string email = 3;
   string username = 4;
