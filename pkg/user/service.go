@@ -1,5 +1,7 @@
 package user
 
+import pb "gorpc/api/user"
+
 type UserService struct {
 	repo UserRepository
 }
@@ -10,14 +12,18 @@ func NewService(repo UserRepository) *UserService {
 	}
 }
 
-func (s *UserService) CreateUser(user *User) error {
-	// Business logic for creating a user.
-	// Call the repository to perform the database operation.
-	return s.repo.CreateUser(user)
-}
+func (s *UserService) GetUser(id string) (*pb.User, error) {
+	user, err := s.repo.GetUser(id)
+	if err != nil {
+		return nil, err
+	}
 
-func (s *UserService) GetUser(userID string) (*User, error) {
-	// Business logic for getting a user.
-	// Call the repository to perform the database operation.
-	return s.repo.GetUser(userID)
+	pbUser := &pb.User{
+		Id: user.id,
+		Username: user.username,
+		Email: user.email,
+		Name: user.name,
+	}
+
+	return pbUser, nil
 }
