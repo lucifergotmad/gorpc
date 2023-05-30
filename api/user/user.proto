@@ -18,7 +18,7 @@ service UserService {
 }
 
 message User {
-  string id = 1;
+  uint64 id = 1;
   string name = 2;
   string email = 3;
   string username = 4;
@@ -28,7 +28,7 @@ message User {
 }
 
 message CreateUserRequest {
-  string id = 1;
+  uint64 id = 1;
   string name = 2;
   string email = 3;
   string username = 4;
@@ -36,19 +36,19 @@ message CreateUserRequest {
 }
 
 message UpdateUserRequest {
-  string id = 1;
+  uint64 id = 1;
   string name = 2;
 }
 
 message UpdateUserPasswordRequest {
-  string id = 1;
+  uint64 id = 1;
   string old_password = 2;
   string new_password = 3;
   string confirmed_password = 4;
 }
 
 message GetUserRequest {
-  string id = 1;
+  uint64 id = 1;
 }
 
 message GetUserBatchRequest {
@@ -57,7 +57,7 @@ message GetUserBatchRequest {
 }
 
 message DeleteUserRequest {
-  string id = 1;
+  uint64 id = 1;
 }
 
 message UserResponse {

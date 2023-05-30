@@ -10,11 +10,11 @@ import (
 )
 
 type UserHandler struct {
-	serv UserService
+	serv IUserService
 	pb.UnimplementedUserServiceServer
 }
 
-func NewHandler(serv UserService) *UserHandler {
+func NewHandler(serv IUserService) *UserHandler {
 	return &UserHandler{
 		serv: serv,
 	}
@@ -22,14 +22,18 @@ func NewHandler(serv UserService) *UserHandler {
 
 
 func (h *UserHandler) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.User, error) {
-	if req.Id == "" {
-		return nil, status.Error(codes.InvalidArgument, "User ID is required")
-	}
-
 	user, err := h.serv.GetUser(req.Id)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "Failed to retrieve user!")
 	}
 
-	return user, nil
+	pbUser := &pb.User{
+		Id: user.id,
+		Name: user.name,
+		Email: user.email,
+		Username: user.username,
+		Password: user.password,
+	}
+
+	return pbUser, nil
 }

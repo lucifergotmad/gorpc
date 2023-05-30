@@ -1,29 +1,19 @@
 package user
 
-import pb "gorpc/api/user"
-
-type UserService struct {
-	repo UserRepository
+type IUserService interface {
+	GetUser(id uint64) (*User, error)
 }
 
-func NewService(repo UserRepository) *UserService {
+type UserService struct {
+	repo IUserRepository
+}
+
+func NewService(repo IUserRepository) IUserService {
 	return &UserService{
 		repo: repo,
 	}
 }
 
-func (s *UserService) GetUser(id string) (*pb.User, error) {
-	user, err := s.repo.GetUser(id)
-	if err != nil {
-		return nil, err
-	}
-
-	pbUser := &pb.User{
-		Id: user.id,
-		Username: user.username,
-		Email: user.email,
-		Name: user.name,
-	}
-
-	return pbUser, nil
+func (s *UserService) GetUser(id uint64) (*User, error) {
+	return s.repo.GetUserByID(id)
 }

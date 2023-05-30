@@ -36,8 +36,8 @@ func main() {
 	}
 	
 	userRepository := user.NewRepository(db)
-	userService := user.NewService(*userRepository)
-	userHandler := user.NewHandler(*userService)
+	userService := user.NewService(userRepository)
+	userHandler := user.NewHandler(userService)
 
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
