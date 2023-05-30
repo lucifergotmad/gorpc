@@ -4,13 +4,13 @@ services:
   user-service:
     build:
       context: ../
-      dockerfile: ./cmd/user-service/Dockerfile
+      dockerfile: ./cmd/user/Dockerfile
     environment:
       - DB_HOST=db
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=myproject
-      - DB_PORT=5432
+      - DB_PORT=5434
     ports:
       - 50051:50051
     depends_on:
@@ -23,7 +23,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=myproject
     volumes:
-      - ./scripts/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ../scripts/db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - 5432:5432
+      - 5434:5432
 
