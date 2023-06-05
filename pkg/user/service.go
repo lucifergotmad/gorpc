@@ -9,6 +9,7 @@ import (
 
 type IUserService interface {
 	GetUser(id uint64) (*User, error)
+	CreateUser(user *User) (error)
 	GenerateToken(user *User) (string, error)
 	SecurePassword(password string) (string, error)
 	CheckPasswordHash(password, hash string) (bool)
@@ -31,6 +32,10 @@ func NewService(repo IUserRepository) IUserService {
 
 func (s *UserService) GetUser(id uint64) (*User, error) {
 	return s.repo.GetUserByID(id)
+}
+
+func (s *UserService) CreateUser(user *User) (error)  {
+	return s.repo.CreateUser(user)
 }
 
 func (s *UserService) GenerateToken(user *User) (string, error) {

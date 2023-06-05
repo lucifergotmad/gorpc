@@ -16,14 +16,6 @@ import (
 	"gorpc/pkg/user"
 )
 
-var (
-	HOST = os.Getenv("DB_HOST")
-	USER = os.Getenv("DB_USER")
-	PASSWORD = os.Getenv("DB_PASSWORD")
-	DBNAME = os.Getenv("DB_NAME")
-	PORT = os.Getenv("DB_PORT")
-)
-
 func main() {
 	log.Println("Starting user-service...")
 	
@@ -31,7 +23,13 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-	
+
+	HOST := os.Getenv("DB_HOST")
+	USER := os.Getenv("DB_USER")
+	PASSWORD := os.Getenv("DB_PASSWORD")
+	DBNAME := os.Getenv("DB_NAME")
+	PORT := os.Getenv("DB_PORT")
+
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable port=%s", HOST, USER, PASSWORD, DBNAME, PORT)
 
 	log.Printf("Connecting to DB with: %s", dsn)

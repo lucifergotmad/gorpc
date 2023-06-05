@@ -15,4 +15,5 @@ type User struct {
 	password  string `gorm:"not null"`
 	created_at time.Time
 	updated_at time.Time
+	deleted_at time.Time
 }
